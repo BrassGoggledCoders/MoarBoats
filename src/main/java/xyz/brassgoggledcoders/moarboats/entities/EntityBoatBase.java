@@ -4,10 +4,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBoat;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.moarboats.items.ItemBoatBase;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +23,7 @@ public class EntityBoatBase extends EntityBoat
 	@Nonnull
 	public Item getItemBoat()
 	{
-		return new ItemBoat(Type.ACACIA);
+		return new ItemBoatBase(Type.ACACIA);
 	}
 
 	@Override
