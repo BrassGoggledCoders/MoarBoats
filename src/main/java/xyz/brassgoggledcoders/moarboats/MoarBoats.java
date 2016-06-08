@@ -3,7 +3,6 @@ package xyz.brassgoggledcoders.moarboats;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -24,22 +23,22 @@ public class MoarBoats extends BoilerplateModBase
 		super(MODID, MODNAME, VERSION, CreativeTabs.MISC);
 	}
 
-	@Override
-	protected void modPreInit(FMLPreInitializationEvent event)
+	@Mod.EventHandler
+	public void preInit(FMLPreInitializationEvent event)
 	{
-
+		super.preInit(event);
 	}
 
-	@Override
-	protected void modInit(FMLInitializationEvent event)
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent event)
 	{
-
+		super.init(event);
 	}
 
-	@Override
-	protected void modPostInit(FMLPostInitializationEvent event)
+	@Mod.EventHandler
+	public void postInit(FMLPostInitializationEvent event)
 	{
-
+		super.postInit(event);
 	}
 
 	@Override
