@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.moarboats.items.ItemBoatBase;
+import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +23,7 @@ public class EntityBoatBase extends EntityBoat
 	@Nonnull
 	public Item getItemBoat()
 	{
-		return new ItemBoatBase(Type.ACACIA);
+		return new ItemBoatHolder();
 	}
 
 	@Override

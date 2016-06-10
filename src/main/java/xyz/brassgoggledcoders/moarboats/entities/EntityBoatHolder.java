@@ -6,6 +6,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
+import xyz.brassgoggledcoders.moarlibs.modules.VanillaModule;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +29,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	@Override
 	public IBlockContainer getBlockContainer()
 	{
-		return this.blockContainer;
+		return VanillaModule.ENDER_CHEST;
 	}
 
 	@Override
@@ -40,10 +41,6 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	@Override
 	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack stack, EnumHand hand)
 	{
-		if(this.getBlockContainer() != null)
-		{
-			//return this.getBlockContainer().onInteract(entityPlayer, this);
-		}
-		return false;
+		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, this);
 	}
 }
