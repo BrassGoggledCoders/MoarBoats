@@ -20,7 +20,7 @@ public class EntityBoatBase extends EntityBoat
 	@Override
 	public boolean canPassengerSteer()
 	{
-		return false;
+		return true;
 	}
 
 	@Override
