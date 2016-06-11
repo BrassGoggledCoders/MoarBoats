@@ -31,14 +31,14 @@ group= "xyz.brassgoggledcoders.moarboats"
 archivesBaseName = "MoarBoats"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}-${minecraft_version}"
+    version = "${minecraft_version}-${forge_version}"
 
     mappings = "${mappings_version}"
     runDir = "run/"
     useDepAts = true
 
     replace "@VERSION@", project.version
-    replaceIn "MoarBoatss.java"
+    replaceIn "MoarBoats.java"
 }
 
 dependencies {
