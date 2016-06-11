@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -88,5 +89,37 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack stack, EnumHand hand)
 	{
 		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, this);
+	}
+
+	@Override
+	@Nonnull
+	public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound)
+	{
+		super.writeToNBT(nbtTagCompound);
+
+		Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
+		if(itemStackBoat.isPresent())
+		{
+			NBTTagCompound itemBoat = new NBTTagCompound();
+			nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.get().writeToNBT(itemBoat));
+		}
+		nbtTagCompound.setString("CONTAINER_NAME", this.dataManager.get(BLOCK_CONTAINER_NAME));
+		if(blockContainer != null)
+		{
+			NBTTagCompound containerTag = new NBTTagCompound();
+			containerTag = blockContainer.writeToNBT(containerTag);
+			nbtTagCompound.setTag("CONTAINER", containerTag);
+		}
+		return nbtTagCompound;
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbtTagCompound)
+	{
+		super.readFromNBT(nbtTagCompound);
+		this.dataManager.set(BLOCK_CONTAINER_NAME, nbtTagCompound.getString("CONTAINER_NAME"));
+		this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
+		this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
+		blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
 	}
 }

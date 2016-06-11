@@ -4,12 +4,14 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.moarboats.items.MoarBoatsCreativeTab;
 import xyz.brassgoggledcoders.moarlibs.MoarLibModBase;
 import xyz.brassgoggledcoders.moarlibs.api.IMoarRegister;
+import xyz.brassgoggledcoders.moarboats.proxies.CommonProxy;
 
 @Mod(modid = MoarBoats.MODID, name = MoarBoats.MODNAME, version = MoarBoats.VERSION, dependencies = MoarBoats.DEPENDENCIES)
 public class MoarBoats extends MoarLibModBase
@@ -26,6 +28,10 @@ public class MoarBoats extends MoarLibModBase
 	@Instance(MoarBoats.MODID)
 	public static MoarBoats INSTANCE;
 
+	@SidedProxy(clientSide = "xyz.brassgoggledcoders.moarboats.proxies.ClientProxy",
+			serverSide = "xyz.brassgoggledcoders.moarboats.proxies.CommonProxy")
+	public static CommonProxy PROXY;
+
 	public MoarBoats()
 	{
 		super(MODID, MODNAME, VERSION, CREATIVE_TAB);
@@ -35,6 +41,7 @@ public class MoarBoats extends MoarLibModBase
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
+		PROXY.registerEntityRenders();
 	}
 
 	@EventHandler
