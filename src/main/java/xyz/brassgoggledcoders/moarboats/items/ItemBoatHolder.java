@@ -22,16 +22,22 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.moarboats.entities.EntityBoatHolder;
+import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemBoatHolder extends ItemBoat
 {
-	public ItemBoatHolder()
+	IBlockContainer firstContainer;
+	IBlockContainer secondContainer;
+
+	public ItemBoatHolder(IBlockContainer firstContainer, IBlockContainer secondContainer)
 	{
 		super(EntityBoat.Type.OAK);
-		this.setUnlocalizedName("boat.holder");
+		this.setUnlocalizedName("boat.holder." + firstContainer.getUnlocalizedName());
+		this.firstContainer = firstContainer;
+		this.secondContainer = secondContainer;
 	}
 
 	@Override
@@ -91,15 +97,17 @@ public class ItemBoatHolder extends ItemBoat
 			{
 				Block block = world.getBlockState(raytraceresult.getBlockPos()).getBlock();
 				boolean isWater = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
-				EntityBoatHolder entityboat = new EntityBoatHolder(world);
+				EntityBoatHolder entityBoatHolder = new EntityBoatHolder(world);
 				double boatPosX = raytraceresult.hitVec.xCoord;
 				double boatPosY = isWater ? raytraceresult.hitVec.yCoord - 0.12D : raytraceresult.hitVec.yCoord;
 				double boatPosZ = raytraceresult.hitVec.zCoord;
-				entityboat.setPosition(boatPosX, boatPosY, boatPosZ);
-				entityboat.setBoatType(this.getType(itemStack));
-				entityboat.rotationYaw = entityPlayer.rotationYaw;
+				entityBoatHolder.setPosition(boatPosX, boatPosY, boatPosZ);
+				entityBoatHolder.setBoatType(this.getType(itemStack));
+				entityBoatHolder.setItemBoat(itemStack);
+				entityBoatHolder.setBlockContainer(this.getBlockContainer(itemStack));
+				entityBoatHolder.rotationYaw = entityPlayer.rotationYaw;
 
-				if (!world.getCollisionBoxes(entityboat, entityboat.getEntityBoundingBox().expandXyz(-0.1D)).isEmpty())
+				if (!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D)).isEmpty())
 				{
 					return new ActionResult<>(EnumActionResult.FAIL, itemStack);
 				}
@@ -107,7 +115,7 @@ public class ItemBoatHolder extends ItemBoat
 				{
 					if (!world.isRemote)
 					{
-						world.spawnEntityInWorld(entityboat);
+						world.spawnEntityInWorld(entityBoatHolder);
 					}
 
 					if (!entityPlayer.capabilities.isCreativeMode)
@@ -131,6 +139,20 @@ public class ItemBoatHolder extends ItemBoat
 			ItemStack stack = new ItemStack(item, 1, i);
 			list.add(stack);
 		}
+
+		if(secondContainer != null)
+		{
+			for (int i = 0; i < EntityBoat.Type.values().length; i++)
+			{
+				ItemStack stack = new ItemStack(item, 1, i);
+				list.add(stack);
+			}
+		}
+	}
+
+	public IBlockContainer getBlockContainer(ItemStack itemStack)
+	{
+		return itemStack.getItemDamage() < 8 ? firstContainer : secondContainer;
 	}
 
 	public void increaseStat(EntityPlayer entityPlayer)

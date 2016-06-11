@@ -1,12 +1,20 @@
 package xyz.brassgoggledcoders.moarboats.entities;
 
+import com.google.common.base.Optional;
+import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
-import xyz.brassgoggledcoders.moarlibs.modules.VanillaModule;
+import xyz.brassgoggledcoders.moarlibs.registries.BlockContainerRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,10 +22,34 @@ import javax.annotation.Nullable;
 public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>
 {
 	IBlockContainer blockContainer;
+	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
+			EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
+	private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
+			EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
 	public EntityBoatHolder(World world)
 	{
 		super(world);
+	}
+
+	@Override
+	protected void entityInit()
+	{
+		super.entityInit();
+		this.dataManager.register(BLOCK_CONTAINER_NAME, "");
+		this.dataManager.register(ITEM_BOAT, Optional.<ItemStack>absent());
+	}
+
+	@Override
+	@Nonnull
+	public Item getItemBoat()
+	{
+		Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
+		if(itemStackBoat.isPresent())
+		{
+			return itemStackBoat.get().getItem();
+		}
+		return Items.BOAT;
 	}
 
 	@Override
@@ -29,13 +61,27 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	@Override
 	public IBlockContainer getBlockContainer()
 	{
-		return VanillaModule.ENDER_CHEST;
+		if(blockContainer == null)
+		{
+			String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
+			blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
+		}
+		return blockContainer;
 	}
 
 	@Override
 	public void setBlockContainer(IBlockContainer blockContainer)
 	{
+		this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
 		this.blockContainer = blockContainer;
+	}
+
+	public void setItemBoat(@Nonnull ItemStack itemBoatStack)
+	{
+		if(itemBoatStack.getItem() instanceof ItemBoatHolder)
+		{
+			this.dataManager.set(ITEM_BOAT, Optional.of(itemBoatStack));
+		}
 	}
 
 	@Override

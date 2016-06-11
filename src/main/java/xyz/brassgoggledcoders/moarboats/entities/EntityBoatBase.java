@@ -3,11 +3,9 @@ package xyz.brassgoggledcoders.moarboats.entities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,13 +15,6 @@ public class EntityBoatBase extends EntityBoat
 	public EntityBoatBase(World world)
 	{
 		super(world);
-	}
-
-	@Override
-	@Nonnull
-	public Item getItemBoat()
-	{
-		return new ItemBoatHolder();
 	}
 
 	@Override
