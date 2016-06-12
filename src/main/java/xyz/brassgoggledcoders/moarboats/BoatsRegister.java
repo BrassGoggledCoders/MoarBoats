@@ -4,7 +4,6 @@ import xyz.brassgoggledcoders.moarboats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 import xyz.brassgoggledcoders.moarlibs.api.IMoarRegister;
-import xyz.brassgoggledcoders.moarlibs.modules.VanillaModule;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -14,7 +13,6 @@ public class BoatsRegister implements IMoarRegister
 	@Override
 	public void registerItems(Map<String, IBlockContainer> blockContainers)
 	{
-		blockContainers.put(VanillaModule.ENDER_CHEST.getUnlocalizedName(), VanillaModule.ENDER_CHEST);
 		Iterator<Map.Entry<String, IBlockContainer>> containerIterable = blockContainers.entrySet().iterator();
 		while(containerIterable.hasNext())
 		{
