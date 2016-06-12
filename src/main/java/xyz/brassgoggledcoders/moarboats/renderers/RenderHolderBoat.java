@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityBoat;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import xyz.brassgoggledcoders.moarboats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.moarboats.models.ModelBoatNoPaddles;
+import xyz.brassgoggledcoders.moarlibs.renderers.RenderBlock;
 
 import javax.annotation.Nonnull;
 
@@ -52,7 +53,7 @@ public class RenderHolderBoat extends RenderBoat
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(180, 1, 0, 0);
 		GlStateManager.translate(-0.5,-0.20, 0.5);
-		this.renderBlock.render(entity, boatHolder.getBlockContainer(), partialTicks);
+		this.renderBlock.renderEntity(entity, boatHolder.getBlockContainer(), partialTicks);
 		GlStateManager.popMatrix();
 
 		if (this.renderOutlines)
