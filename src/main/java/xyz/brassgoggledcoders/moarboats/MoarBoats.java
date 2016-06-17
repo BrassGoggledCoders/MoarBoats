@@ -8,10 +8,14 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.moarboats.items.MoarBoatsCreativeTab;
+import xyz.brassgoggledcoders.moarboats.proxies.CommonProxy;
 import xyz.brassgoggledcoders.moarlibs.MoarLibModBase;
 import xyz.brassgoggledcoders.moarlibs.api.IMoarRegister;
-import xyz.brassgoggledcoders.moarboats.proxies.CommonProxy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod(modid = MoarBoats.MODID, name = MoarBoats.MODNAME, version = MoarBoats.VERSION, dependencies = MoarBoats.DEPENDENCIES)
 public class MoarBoats extends MoarLibModBase
@@ -19,11 +23,11 @@ public class MoarBoats extends MoarLibModBase
 	public static final String MODID = "moarboats";
 	public static final String MODNAME = "MoarBoats";
 	public static final String VERSION = "@VERSION@";
-	public static final String DEPENDENCIES = "";//"required-after:boilerplate@[1.9.4-8.0.0.0,);" +
-			//"required-after:moarlibs@[1.9.4-0.1.0.0,);";
+	public static final String DEPENDENCIES = "required-after:moarlibs;";
 
 	public static final BoatsRegister BOATS_REGISTER = new BoatsRegister();
 	public static final CreativeTabs CREATIVE_TAB = new MoarBoatsCreativeTab();
+	public static List<ItemBoatHolder> ALL_BOATS = new ArrayList<>();
 
 	@Instance(MoarBoats.MODID)
 	public static MoarBoats INSTANCE;
@@ -42,6 +46,7 @@ public class MoarBoats extends MoarLibModBase
 	{
 		super.preInit(event);
 		PROXY.registerEntityRenders();
+		PROXY.registerItemRenders();
 	}
 
 	@EventHandler
