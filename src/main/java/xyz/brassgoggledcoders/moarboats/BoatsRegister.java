@@ -23,6 +23,7 @@ public class BoatsRegister implements IMoarRegister
 				secondContainer = containerIterable.next().getValue();
 			}
 			ItemBoatHolder holder = new ItemBoatHolder(firstContainer, secondContainer);
+			MoarBoats.ALL_BOATS.add(holder);
 			MoarBoats.INSTANCE.getRegistryHolder().getItemRegistry().registerItem(holder);
 		}
 	}

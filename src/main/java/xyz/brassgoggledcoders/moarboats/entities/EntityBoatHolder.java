@@ -66,15 +66,20 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 		{
 			String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
 			blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
+			if(blockContainer != null)
+			{
+				blockContainer.init(this);
+			}
 		}
 		return blockContainer;
 	}
 
 	@Override
-	public void setBlockContainer(IBlockContainer blockContainer)
+	public void setBlockContainer(@Nonnull IBlockContainer blockContainer)
 	{
 		this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
 		this.blockContainer = blockContainer;
+		blockContainer.init(this);
 	}
 
 	public void setItemBoat(@Nonnull ItemStack itemBoatStack)
