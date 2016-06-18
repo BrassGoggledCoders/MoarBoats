@@ -11,12 +11,15 @@ import xyz.brassgoggledcoders.moarboats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.moarboats.renderers.RenderHolderBoat;
 import xyz.brassgoggledcoders.moarboats.renderers.RenderItemBoatHolder;
+import xyz.brassgoggledcoders.moarboats.renderers.RenderRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientProxy extends CommonProxy
 {
+	RenderRegistry renderRegistry;
+
 	@Override
 	public void registerEntityRenders()
 	{
@@ -36,6 +39,7 @@ public class ClientProxy extends CommonProxy
 				ModelLoader.setCustomModelResourceLocation(holderStack.getItem(), holderStack.getMetadata(),
 						new ModelResourceLocation("moarboats:boat_container", "inventory"));
 			}
+			renderRegistry.registerCustomItemRenderer(holder);
 		}
 	}
 }

@@ -23,11 +23,11 @@ public class MoarBoats extends MoarLibModBase
 	public static final String MODID = "moarboats";
 	public static final String MODNAME = "MoarBoats";
 	public static final String VERSION = "@VERSION@";
-	public static final String DEPENDENCIES = "required-after:moarlibs";
+	public static final String DEPENDENCIES = "required-after:moarlibs;";
 
 	public static final BoatsRegister BOATS_REGISTER = new BoatsRegister();
 	public static final CreativeTabs CREATIVE_TAB = new MoarBoatsCreativeTab();
-	public static final List<ItemBoatHolder> ALL_BOATS = new ArrayList<>();
+	public static List<ItemBoatHolder> ALL_BOATS = new ArrayList<>();
 
 	@Instance(MoarBoats.MODID)
 	public static MoarBoats INSTANCE;

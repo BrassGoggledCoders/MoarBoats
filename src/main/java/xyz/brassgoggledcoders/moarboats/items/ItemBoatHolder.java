@@ -22,15 +22,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.moarboats.entities.EntityBoatHolder;
+import xyz.brassgoggledcoders.moarboats.renderers.ICustomRenderedItem;
+import xyz.brassgoggledcoders.moarboats.renderers.IItemRenderingHandler;
+import xyz.brassgoggledcoders.moarboats.renderers.RenderHolderBoatItem;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat
+public class ItemBoatHolder extends ItemBoat implements ICustomRenderedItem<ItemBoatHolder>
 {
-	IBlockContainer firstContainer;
-	IBlockContainer secondContainer;
+	public IBlockContainer firstContainer;
+	public IBlockContainer secondContainer;
 
 	public ItemBoatHolder(IBlockContainer firstContainer, IBlockContainer secondContainer)
 	{
@@ -144,7 +147,7 @@ public class ItemBoatHolder extends ItemBoat
 		{
 			for (int i = 0; i < EntityBoat.Type.values().length; i++)
 			{
-				ItemStack stack = new ItemStack(item, 1, i);
+				ItemStack stack = new ItemStack(item, 1, i + 8);
 				list.add(stack);
 			}
 		}
@@ -167,5 +170,15 @@ public class ItemBoatHolder extends ItemBoat
 	public EntityBoat.Type getType(ItemStack itemStack)
 	{
 		return EntityBoat.Type.values()[itemStack.getItemDamage()];
+	}
+
+	@Override
+	public String[] getResourceLocations() {
+		return new String[] {"boat_container"};
+	}
+
+	@Override
+	public IItemRenderingHandler<ItemBoatHolder> getRenderer() {
+		return new RenderHolderBoatItem(this);
 	}
 }

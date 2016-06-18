@@ -79,7 +79,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	{
 		this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
 		this.blockContainer = blockContainer;
-		blockContainer.init(this);
+		this.blockContainer.init(this);
 	}
 
 	public void setItemBoat(@Nonnull ItemStack itemBoatStack)
