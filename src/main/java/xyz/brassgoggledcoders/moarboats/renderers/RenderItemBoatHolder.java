@@ -8,8 +8,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.boilerplate.client.ClientHelper;
 import xyz.brassgoggledcoders.boilerplate.utils.ItemStackUtils;
+import xyz.brassgoggledcoders.moarboats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.moarboats.models.ModelBoatNoPaddles;
+import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 import xyz.brassgoggledcoders.moarlibs.renderers.RenderBlock;
 
 import javax.annotation.Nonnull;
@@ -50,7 +52,13 @@ public class RenderItemBoatHolder extends TileEntitySpecialRenderer<RenderItemBo
 			GlStateManager.pushMatrix();
 
 			GlStateManager.translate(-0.5, 0.20, 0.5);
-			this.renderBlock.renderEntity(ClientHelper.player(), boatHolder.getBlockContainer(itemStack), 0);
+			IBlockContainer blockContainer = boatHolder.getBlockContainer(itemStack);
+			if(blockContainer.getTileEntity() == null) {
+				EntityBoatHolder entityBoatHolder = new EntityBoatHolder(this.getWorld());
+				entityBoatHolder.setBlockContainer(blockContainer);
+				blockContainer.init(entityBoatHolder);
+			}
+			this.renderBlock.renderEntity(ClientHelper.player(), blockContainer, 0);
 			GlStateManager.popMatrix();
 
 			int itemDamage = itemStack.getItemDamage();
