@@ -23,6 +23,8 @@ public class RenderRegistry implements ICustomModelLoader {
 	private final Map<ResourceLocation, ItemRenderer<? extends Item>> renderers;
 	private final List<ICustomRenderedItem<? extends Item>> items;
 
+	public static Map<Long, ItemStack> currentlyRenderedStacks = new HashMap<>();
+
 	public RenderRegistry() {
 		this.renderers = new HashMap<>();
 		this.items = new ArrayList<>();
@@ -75,5 +77,9 @@ public class RenderRegistry implements ICustomModelLoader {
 			});
 		}
 		items.add(customRenderedItem);
+	}
+
+	public void registerCustomItemRenderer(Item customRenderedItem, int meta) {
+		this.registerCustomItemRenderer((ICustomRenderedItem)customRenderedItem);
 	}
 }

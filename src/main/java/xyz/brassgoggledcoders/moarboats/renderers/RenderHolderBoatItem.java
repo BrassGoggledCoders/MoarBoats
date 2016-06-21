@@ -38,12 +38,6 @@ public class RenderHolderBoatItem implements IItemRenderingHandler<ItemBoatHolde
 
 	private void setBoatTextures() {
 		BOAT_TEXTURES = new ArrayList<>();
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_oak"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_spruce"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_birch"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_jungle"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_acacia"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_darkoak"));
 	}
 
 	@Override

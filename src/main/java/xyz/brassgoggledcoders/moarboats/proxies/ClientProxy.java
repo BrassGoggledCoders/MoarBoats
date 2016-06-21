@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ClientProxy extends CommonProxy
 {
-	RenderRegistry renderRegistry;
+	RenderRegistry renderRegistry = new RenderRegistry();
 
 	@Override
 	public void registerEntityRenders()
@@ -38,6 +38,7 @@ public class ClientProxy extends CommonProxy
 						RenderItemBoatHolder.FakeTE.class);
 				ModelLoader.setCustomModelResourceLocation(holderStack.getItem(), holderStack.getMetadata(),
 						new ModelResourceLocation("moarboats:boat_container", "inventory"));
+				renderRegistry.registerCustomItemRenderer(holderStack.getItem(), holderStack.getItemDamage());
 			}
 			renderRegistry.registerCustomItemRenderer(holder);
 		}
