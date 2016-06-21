@@ -1,14 +1,11 @@
 package xyz.brassgoggledcoders.moarboats.renderers;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import xyz.brassgoggledcoders.boilerplate.client.ClientHelper;
 import xyz.brassgoggledcoders.boilerplate.utils.ItemStackUtils;
 import xyz.brassgoggledcoders.moarboats.items.ItemBoatHolder;
@@ -33,12 +30,12 @@ public class RenderItemBoatHolder extends TileEntitySpecialRenderer<RenderItemBo
 
 	private void setBoatTextures() {
 		BOAT_TEXTURES = new ArrayList<>();
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_oak"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_spruce"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_birch"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_jungle"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_acacia"));
-		BOAT_TEXTURES.add(new ResourceLocation("entity/boat/boat_darkoak"));
+		BOAT_TEXTURES.add(new ResourceLocation("textures/entity/boat/boat_oak.png"));
+		BOAT_TEXTURES.add(new ResourceLocation("textures/entity/boat/boat_spruce.png"));
+		BOAT_TEXTURES.add(new ResourceLocation("textures/entity/boat/boat_birch.png"));
+		BOAT_TEXTURES.add(new ResourceLocation("textures/entity/boat/boat_jungle.png"));
+		BOAT_TEXTURES.add(new ResourceLocation("textures/entity/boat/boat_acacia.png"));
+		BOAT_TEXTURES.add(new ResourceLocation("textures/entity/boat/boat_darkoak.png"));
 	}
 
 	@Override
@@ -49,17 +46,16 @@ public class RenderItemBoatHolder extends TileEntitySpecialRenderer<RenderItemBo
 			ItemBoatHolder boatHolder = (ItemBoatHolder) itemStack.getItem();
 
 			GlStateManager.pushMatrix();
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
 			GlStateManager.pushMatrix();
-			GlStateManager.rotate(180, 1, 0, 0);
-			GlStateManager.translate(-0.5, -0.20, 0.5);
+
+			GlStateManager.translate(-0.5, 0.20, 0.5);
 			this.renderBlock.renderEntity(ClientHelper.player(), boatHolder.getBlockContainer(itemStack), 0);
 			GlStateManager.popMatrix();
 
 			int itemDamage = itemStack.getItemDamage();
 			int type = itemDamage > 7 ? itemDamage - 8 : itemDamage;
-			Minecraft.getMinecraft().getTextureManager().bindTexture(BOAT_TEXTURES.get(type));
+			this.bindTexture(BOAT_TEXTURES.get(type));
 
 			this.modelBoat.render(ClientHelper.player(), 0, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
